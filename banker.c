@@ -30,18 +30,21 @@ FILE *f; //carry the file pointer
 int main(){
 char path[256];
 LoadFile(path);
-f = fopen(path,"r");
+if (f = fopen(path,"r")){
+
 int C[5][3],M[5][3],A[1][3];
 GetData(5,C);
 GetData(5,M);
 GetData(1,A);
+fclose(f);
 int need[5][3];
 subtract_matrices(5,3,need,M,C);
 Banker(C,M,A,need);
-
-//printf("\n\n %d %d %d",A[0][0],A[0][1],A[0][2]);
-
-
+}
+else
+    printf("File Not Exist");
+getchar();
+return 0;
 }
 
 void LoadFile(char *path)

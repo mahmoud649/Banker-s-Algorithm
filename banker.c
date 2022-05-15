@@ -28,7 +28,7 @@ FILE *f; //carry the file pointer
 
 
 int main(){
-char path[256];
+char path[512] = "";
 LoadFile(path);
 if (f = fopen(path,"r")){
 

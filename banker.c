@@ -13,7 +13,7 @@ typedef struct {
 }Queue;
 
 void CreateQueue(Queue* q ,int n);
-int IsEmpty(Queue* q);
+int IsEmpty(Queue* q);      //check if queue is empty
 void QueueAdd(Queue* q , int ndata);
 int QueueOut(Queue* q);
 void QueuePrint (Queue q);
@@ -21,28 +21,28 @@ void QueuePrint (Queue q);
 // Function Prototype
 void LoadFile(char *); //Load File In Path Variable
 void GetData(int n,int c[][3]); //Get Data From File   n:number of rows to get
-void subtract_matrices(int rows,int col,int out[][col],int mat1[][col],int mat2[][col]);
-void Banker(int C[5][3],int M[5][3],int A[1][3],int need[5][3]);
+void subtract_matrices(int rows,int col,int out[][col],int mat1[][col],int mat2[][col]);     //separite the matrices
+void Banker(int C[5][3],int M[5][3],int A[1][3],int need[5][3]);           //banker's algorithm function
 FILE *f; //carry the file pointer
- 
+
 
 
 int main(){
 char path[512] = "";
-LoadFile(path);
+LoadFile(path);    //loads the file
 if (f = fopen(path,"r")){
 
 int C[5][3],M[5][3],A[1][3];
 GetData(5,C);
 GetData(5,M);
-GetData(1,A);
-fclose(f);
+GetData(1,A);           //fetch data to each matrix
+fclose(f);          // closes the file
 int need[5][3];
 subtract_matrices(5,3,need,M,C);
-Banker(C,M,A,need);
+Banker(C,M,A,need);      // run the algorithm
 }
 else
-    printf("File Not Exist");
+    printf("File Not Exist");       //error if the file name is wrong
 getchar();
 return 0;
 }
@@ -52,7 +52,7 @@ void LoadFile(char *path)
 getcwd(path,sizeof(path)); //go to the current path
 printf("Enter The File Name ==> ");
 char filename[50];
-scanf("%s",filename);
+scanf("%s",filename);            // get the file name from the user
 strcat(path,filename);
 }
 
@@ -78,10 +78,10 @@ void subtract_matrices(int rows,int col,int out[][col],int mat1[][col],int mat2[
     for (int j = 0; j < col; ++j) {
       out[i][j] = mat1[i][j] - mat2[i][j];
     }
-    
+
 }
 
-
+// the main algorithm
 void Banker(int C[5][3],int M[5][3],int A[1][3],int need[5][3])
 {
     Queue p,seq;
@@ -89,7 +89,7 @@ void Banker(int C[5][3],int M[5][3],int A[1][3],int need[5][3])
     CreateQueue(&seq,5);
     for(int i = 0;i<5;i++)
         QueueAdd(&p , i);
-    
+
     while(!IsEmpty(&p))
     {
         int found = 0,p_size = p.size;
@@ -127,7 +127,8 @@ void Banker(int C[5][3],int M[5][3],int A[1][3],int need[5][3])
 
 
 
-// Queue Funs
+// Queue Functions
+//intialize the queue
 void CreateQueue(Queue* q ,int n)
 {
     q->front = 0;
@@ -137,11 +138,13 @@ void CreateQueue(Queue* q ,int n)
     q->data = (int*)malloc(n * sizeof(int));
 }
 
+//check if empty
 int IsEmpty(Queue* q)
 {
     return !q->size;
 }
 
+//add to the queue
 void QueueAdd(Queue* q , int ndata)
 {
     q->size ++;
@@ -152,6 +155,7 @@ void QueueAdd(Queue* q , int ndata)
     q->data[q->rear]= ndata;
 }
 
+// remove from the queue
 int QueueOut(Queue* q)
 {
     int temp = q->data[q->front];
@@ -163,6 +167,7 @@ int QueueOut(Queue* q)
     return temp;
 }
 
+// print the elements in the queue
 void QueuePrint (Queue q)
 {
     if (IsEmpty(&q))

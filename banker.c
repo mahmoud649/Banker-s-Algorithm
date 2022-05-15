@@ -3,6 +3,21 @@
 #include<unistd.h>
 #include <stdlib.h>
 
+//Build Queue
+typedef struct {
+    int front;
+    int rear;
+    int size;
+    int *data;
+}Queue;
+
+void CreateQueue(Queue* q ,int n);
+int IsEmpty(Queue* q);
+void QueueAdd(Queue* q , int ndata);
+int QueueOut(Queue* q);
+void QueuePrint (Queue q);
+
+// Function Prototype
 void LoadFile(char *); //Load File In Path Variable
 void GetData(int n,int c[][3]); //Get Data From File   n:number of rows to get
 void subtract_matrices(int rows,int col,int out[][col],int mat1[][col],int mat2[][col]);
@@ -56,4 +71,69 @@ void subtract_matrices(int rows,int col,int out[][col],int mat1[][col],int mat2[
     for (int j = 0; j < col; ++j) {
       out[i][j] = mat1[i][j] - mat2[i][j];
     }
+}
+
+
+void Banker(C[5][3],M[5][3],A[1][3],need[5][3])
+{
+    Queue q;
+    CreateQueue(&q,5);
+    for(int i = 0;i<5;i++)
+        QueueAdd(&q , i);
+    
+    while(!IsEmpty(&q))
+    {
+        
+    }
+
+
+}
+
+
+
+
+// Queue Funs
+void CreateQueue(Queue* q ,int n)
+{
+    q->front = 0;
+    q->rear = -1;
+    q->size = 0;
+    q->data = (int*)malloc(n * sizeof(int));
+}
+
+int IsEmpty(Queue* q)
+{
+    return !q->size;
+}
+
+void QueueAdd(Queue* q , int ndata)
+{
+    q->size ++;
+    q->rear ++;
+    q->data[q->rear]= ndata;
+}
+
+int QueueOut(Queue* q)
+{
+    int temp = q->data[q->front];
+    q->size --;
+    q->front ++;
+    return temp;
+}
+
+void QueuePrint (Queue q)
+{
+    if (IsEmpty(&q))
+    {
+        printf("Empty\n");
+        return;
+    }
+    printf("%d",q.data[q.front]);
+    q.front ++;
+    for (int i=0; i<q.size-1;i++)
+    {
+        printf(",%d",q.data[q.front]);
+        q.front ++;
+    }
+    printf("\n");
 }
